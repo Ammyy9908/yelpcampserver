@@ -16,7 +16,8 @@ const verifyUser = async (req,res,next)=>{
         }
 
         try{
-            const decoded = await jwt.verify("topsecret");
+            const decoded = await jwt.verify(token,"topsecret");
+            console.log(decoded);
             
             req.user = decoded;
             next();
