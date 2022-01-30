@@ -31,7 +31,7 @@ const verifyUser = async (req,res,next)=>{
 
 router.post('/camp/new',verifyUser,async (req,res)=>{
     const user = req.user;
-        const {image,title,description,price,location} = req.body;
+        const {image,title,description,price,location,lat,lang} = req.body;
         
 
         const camp = await Camp.findOne({title});
@@ -45,6 +45,8 @@ router.post('/camp/new',verifyUser,async (req,res)=>{
             description,
             price,
             location,
+            lat,
+            lang,
             author:user._id
         });
 

@@ -25,6 +25,14 @@ const campSchema = new Schema({
     price:{
         type:Number,
         required:true
+    },
+    lat:{
+        type:String,
+        required:true
+    },
+    lang:{
+        type:String,
+        required:true
     }
 });
 
