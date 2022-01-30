@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const User = require('../models/User');
-const bcrypt= require('bcryptjs');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 const Camp = require('../models/Camp');
@@ -31,7 +30,8 @@ const verifyUser = async (req,res,next)=>{
 
 router.post('/camp/new',verifyUser,async (req,res)=>{
     const user = req.user;
-        const {image,title,description,price,location,lat,lang} = req.body;
+        const {image,title,description,price,location,lat,long} = req.body;
+        
         
 
         const camp = await Camp.findOne({title});
@@ -46,7 +46,7 @@ router.post('/camp/new',verifyUser,async (req,res)=>{
             price,
             location,
             lat,
-            lang,
+            long,
             author:user._id
         });
 
@@ -55,6 +55,7 @@ router.post('/camp/new',verifyUser,async (req,res)=>{
                 res.status(200).json({camp});
             }
         }).catch((e)=>{
+            console.log(e);
             res.status(500).json({error:e});
         })
 
@@ -70,6 +71,11 @@ router.post('/camp/new',verifyUser,async (req,res)=>{
     const user = await User.findOne({_id:req.params.uid});
     
     res.status(200).send(user.username);
+}).get('/search',async (req,res)=>{
+    const {q} = req.query;
+    const regex = new RegExp(q,'i');
+    const camps = await Camp.find({title:regex});
+    res.status(200).json({camps});
 })
 
 

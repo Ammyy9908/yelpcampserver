@@ -30,7 +30,7 @@ const campSchema = new Schema({
         type:String,
         required:true
     },
-    lang:{
+    long:{
         type:String,
         required:true
     }
